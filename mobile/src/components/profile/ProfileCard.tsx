@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import styled from "styled-components/native";
-import NoteDetailsModal from "./NoteDetailsModal";
+import ProfileDetailsModal from "./ProfileDetailsModal";
 
-interface NoteCardProps {
+interface ProfileCardProps {
   data;
 }
 
@@ -13,9 +13,9 @@ const StyledText = styled.Text({
   marginBottom: 5,
 });
 
-export default function BookCard({ data }: NoteCardProps) {
+export default function ProfileCard({ data }: ProfileCardProps) {
   const {  title } = data;
-  const [isNoteDetailsModalVisible, setIsNoteDetailsModalVisible] =
+  const [isProfileDetailsModalVisible, setIsProfileDetailsModalVisible] =
     useState(false);
 
   const StyledTouchableOpacity = styled.TouchableOpacity({
@@ -32,7 +32,7 @@ export default function BookCard({ data }: NoteCardProps) {
     <>
       <StyledTouchableOpacity
         activeOpacity={1}
-        onPress={() => setIsNoteDetailsModalVisible(true)}
+        onPress={() => setIsProfileDetailsModalVisible(true)}
       >
         <View>
           <StyledText style={{ fontSize: 20 }}></StyledText>
@@ -46,11 +46,12 @@ export default function BookCard({ data }: NoteCardProps) {
         </View>
       </StyledTouchableOpacity>
 
-      <NoteDetailsModal
+      <ProfileDetailsModal
         data={data}
-        setVisible={setIsNoteDetailsModalVisible}
-        visible={isNoteDetailsModalVisible}
+        setVisible={setIsProfileDetailsModalVisible}
+        visible={isProfileDetailsModalVisible}
       />
     </>
   );
 }
+

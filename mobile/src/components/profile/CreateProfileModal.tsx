@@ -15,28 +15,35 @@ import { db } from "../../services/firebaseService";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 
-interface CreateNoteModalProps extends ModalProps {
+interface CreateProfileModalProps extends ModalProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function CreateNoteModal({
+export default function CreateProfileModal({
   setVisible,
   ...rest
-}: CreateNoteModalProps) {
-  const [note, setNote] = useState("");
-  const [title, setTitle] = useState("");
+}: CreateProfileModalProps) {
+ 
   const { authUser } = useContext(AuthContext);
+  const [name, setName] = useState(authUser.name);
+  const [lastName, setLastName] = useState(authUser.lastName);
+  const [email, setEmail] = useState(authUser.email);
+  const [password, setPassword] = useState("");
 
-  const handleCreateNote = async () => {
+  const handleCreateProfile = async () => {
     try {
-      await addDoc(collection(db, "notes"), {
-        title,
-        note,
+      await addDoc(collection(db, "profile"), {
+        name,
+        lastName,
+        email,
+        password,
         dateCreated: new Date(),
         userId: authUser.id,
       });
-      setNote("");
-      setTitle("");
+      setName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
       setVisible(false);
     } catch (error) {
       alert(error.message);
@@ -59,27 +66,41 @@ export default function CreateNoteModal({
               }}
               onPress={() => setVisible(false)}
             >
-              <Icon name="x" size={30} color="white" />
+              <Icon name="x" size={30} color="purple" />
             </TouchableOpacity>
             <Text style={{ textAlign: "center", fontSize: 20 }}>
-              Yeni Not Ekle
+              Profili Güncelle
             </Text>
           </View>
           <Input
-            placeholder="Başlık"
             style={{ marginVertical: 10 }}
-            value={title}
-            onChangeText={(value) => setTitle(value)}
+            multiline
+            value={name}
+            placeholder="isim"
+            onChangeText={(value) => setName(value)}
+          />
+          <Input
+            placeholder="soyisim"
+            style={{ marginVertical: 10 }}
+            value={lastName}
+            onChangeText={(value) => setLastName(value)}
           />
 
           <Input
-            style={{ marginVertical: 10, flex: 1, textAlignVertical: "top" }}
+            style={{ marginVertical: 10 }}
             multiline
-            value={note}
-            placeholder="Not..."
-            onChangeText={(value) => setNote(value)}
+            value={email}
+            placeholder="email"
+            onChangeText={(value) => setEmail(value)}
           />
-          <Button label="Notumu Kaydet" onPress={handleCreateNote} />
+          <Input
+            style={{ marginVertical: 10 }}
+            multiline
+            value={password}
+            placeholder="sifre"
+            onChangeText={(value) => setPassword(value)}
+          />
+          <Button label="Profilimi Güncelle" onPress={handleCreateProfile} />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Modal>

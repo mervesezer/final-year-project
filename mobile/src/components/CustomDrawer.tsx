@@ -11,8 +11,12 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import IonIcon from "react-native-vector-icons/Ionicons";
+import { AuthContext } from "../contexts/AuthContextProvider";
+import { useContext } from "react";
 
 const CustomDrawer = (props) => {
+  const { authUser, setAuthUser } = useContext(AuthContext);
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -24,7 +28,9 @@ const CustomDrawer = (props) => {
           style={{ padding: 20 }}
         >
           <Image
-            source={require("../../assets/images/user-profile.jpg")}
+            source={{
+              uri: `https://ui-avatars.com/api/?name=${authUser.name}+${authUser.lastName}&size=200`,
+            }}
             style={{
               height: 80,
               width: 80,
@@ -37,9 +43,10 @@ const CustomDrawer = (props) => {
               color: "#fff",
               fontSize: 18,
               marginBottom: 5,
+              fontWeight: "bold",
             }}
           >
-            Elif Serap
+            {authUser.name} {authUser.lastName}
           </Text>
           <View style={{ flexDirection: "row" }}></View>
         </ImageBackground>
@@ -52,9 +59,14 @@ const CustomDrawer = (props) => {
           onPress={() => {}}
           style={{ paddingVertical: 15 }}
         ></TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
+        <TouchableOpacity
+          onPress={() => {
+            setAuthUser(null);
+          }}
+          style={{ paddingVertical: 15 }}
+        >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <IonIcon name="exit-outline" size={22}/>
+            <IonIcon name="exit-outline" size={22} />
             <Text
               style={{
                 fontSize: 15,

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import styled from "styled-components/native";
-import Diary from "../../models/Diary";
 import DiaryDetailsModal from "./DiaryDetailsModal";
 
 interface DiaryCardProps {
-  data: Diary;
+  data;
 }
 
 const StyledText = styled.Text({

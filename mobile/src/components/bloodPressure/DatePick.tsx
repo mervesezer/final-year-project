@@ -16,10 +16,10 @@ const Example = ({handleConfirm}) => {
 
   return (
     <View>
-      <Button style={{backgroundColor: "#f68f40"}} label="Tarih" onPress={showDatePicker}  />
+      <Button style={{backgroundColor: "#f68f40"}} label="Tarih ve Saat" onPress={showDatePicker}  />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
-        mode="date"
+        mode="datetime"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />

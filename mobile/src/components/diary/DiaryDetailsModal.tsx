@@ -8,11 +8,11 @@ import React, {
 import { Text, Modal, ModalProps, View, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
-import Diary from "../../models/Diary";
+
 
 interface NoteDetailsModalProps extends ModalProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: Diary;
+  data;
 }
 
 export default function NoteDetailsModal({

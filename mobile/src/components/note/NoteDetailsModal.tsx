@@ -1,18 +1,15 @@
 import React, {
   Dispatch,
   SetStateAction,
-  useContext,
-  useEffect,
-  useState,
 } from "react";
 import { Text, Modal, ModalProps, View, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
-import Note from "../../models/Note";
+
 
 interface NoteDetailsModalProps extends ModalProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: Note;
+  data;
 }
 
 export default function NoteDetailsModal({

@@ -25,5 +25,5 @@ const auth = getAuth(app);
 
 
 
-export { auth, firestore, db };
+export { auth, db };
 

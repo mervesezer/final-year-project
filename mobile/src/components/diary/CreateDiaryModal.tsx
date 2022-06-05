@@ -1,9 +1,8 @@
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection} from "firebase/firestore";
 import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import {
@@ -13,7 +12,6 @@ import {
   View,
   TouchableOpacity,
   KeyboardAvoidingView,
-  DatePickerIOSBase,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
@@ -34,7 +32,7 @@ export default function CreateDiaryModal({
   ...rest
 }: CreateDiaryModalProps) {
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(new Date());
   const { authUser } = useContext(AuthContext);
 
   const handleCreateDiary = async () => {
@@ -45,9 +43,9 @@ export default function CreateDiaryModal({
         userId: authUser.id,
       });
 
-      alert("Kayit Basarili");
       setDescription("");
       setDate(null);
+      setVisible(false);
     } catch (error) {
       alert(error.message);
     }

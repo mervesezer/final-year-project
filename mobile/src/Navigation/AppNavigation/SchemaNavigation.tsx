@@ -6,16 +6,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import FoundationIcon from "react-native-vector-icons/Foundation";
 import FontistoIcon from "react-native-vector-icons/Fontisto";
 import EntypoIcon from "react-native-vector-icons/Entypo";
-import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import Note from "../../screens/Note";
 import List from "../../screens/List";
-import Budget from "../../screens/Budget";
 import Planner from "../../screens/Planner";
 import Diary from "../../screens/Diary";
 import CustomDrawer from "../../components/CustomDrawer";
 import BloodPressure from "../../screens/BloodPressure";
-import Medicine from "../../screens/Medicine";
-import Register from "../../screens/Register";
+
 
 const Drawer = createDrawerNavigator();
 
@@ -40,15 +37,6 @@ export default function Navigation() {
       />
 
       <Drawer.Screen
-        name="Kayit"
-        options={{
-          title: "Kayit",
-          drawerIcon: ({ size }) => <Icon name="user" size={23} />,
-        }}
-        component={Register}
-      />
-
-      <Drawer.Screen
         name="note_screen"
         options={{
           title: "Notlar",
@@ -66,17 +54,6 @@ export default function Navigation() {
           drawerIcon: ({ size }) => <Icon name="list-ol" size={20} />,
         }}
         component={List}
-      />
-
-      <Drawer.Screen
-        name="budget_screen"
-        options={{
-          title: "Bütçe",
-          drawerIcon: ({ size }) => (
-            <FontistoIcon name="money-symbol" size={20} />
-          ),
-        }}
-        component={Budget}
       />
 
       <Drawer.Screen
@@ -108,7 +85,7 @@ export default function Navigation() {
         component={BloodPressure}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="ilaclarim"
         options={{
           title: "İlaçlarım",
@@ -117,7 +94,7 @@ export default function Navigation() {
           ),
         }}
         component={Medicine}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }

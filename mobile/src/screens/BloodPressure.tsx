@@ -1,36 +1,56 @@
-import React, { useState } from "react";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import AddPressure from "../components/bloodPressure/AddPressure";
 import BloodPressureItem from "../components/bloodPressure/BloodPressureItem";
+import { AuthContext } from "../contexts/AuthContextProvider";
+import { db } from "../services/firebaseService";
 
-export default function App() {
-  const [pressures,setPressures] = useState([
-    { text: "5.6", key: "1" },
-    { text: "7.8", key: "2" },
-    { text: "6.2", key: "3" },
-  ]);
+export default function BloodPressure() {
+  const { authUser } = useContext(AuthContext);
+  const [pressures, setPressures] = useState([]);
 
-  const pressHandler = (key) => {
-  setPressures((prevPressures) => {
-      return prevPressures.filter((pressure) => pressure.key != key);
+  useEffect(() => {
+    const q = query(
+      collection(db, "blood_pressures"),
+      where("userId", "==", authUser.id)
+    );
+
+    const unsub = onSnapshot(q, (collection) => {
+      const data = [];
+      collection.forEach((doc) => {
+        data.push({ id: doc.id, ...doc.data() });
+      });
+
+      setPressures(data.sort((a, b) => b.date - a.date));
     });
-  };
-  const submitHandler = (text) => {
-  setPressures((prevPressures) => {
-      return [{ text: text, key: Math.random().toString() }, ...prevPressures];
-    });
+
+    return () => unsub();
+  }, []);
+
+  const handleDelete = async (id: string) => {
+    await deleteDoc(doc(db, "blood_pressures", id));
   };
 
   return (
     <View style={styles.container}>
-     
       <View style={styles.content}>
-        <AddPressure submitHandler={submitHandler} />
+        <AddPressure />
         <View style={styles.list}>
           <FlatList
             data={pressures}
             renderItem={({ item }) => (
-              <BloodPressureItem item={item} pressHandler={pressHandler} />
+              <BloodPressureItem
+                item={item}
+                pressHandler={() => handleDelete(item.id)}
+              />
             )}
           />
         </View>

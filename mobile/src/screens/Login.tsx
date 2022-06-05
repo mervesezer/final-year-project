@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
-import { View, Text, Alert, KeyboardAvoidingView } from "react-native";
+import { View, KeyboardAvoidingView } from "react-native";
 import { Card } from "react-native-paper";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { AuthContext } from "../contexts/AuthContextProvider";
-import { auth, firestore } from "../services/firebaseService";
+import { auth,db } from "../services/firebaseService";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../Navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,12 +24,12 @@ export default function Login() {
         password
       );
 
-      const docRef = firestore.doc(
-        firestore.getFirestore(),
+      const docRef = doc(
+        db,
         "users",
         loginData.user.uid
       );
-      const data = (await firestore.getDoc(docRef)).data();
+      const data = (await getDoc(docRef)).data();
 
       setAuthUser({
         id: loginData.user.uid,
