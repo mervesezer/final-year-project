@@ -66,14 +66,15 @@ const CustomDrawer = (props) => {
           style={{ paddingVertical: 15 }}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <IonIcon name="exit-outline" size={22} />
+            <IonIcon name="exit-outline" size={22} color="red" />
             <Text
               style={{
                 fontSize: 15,
                 marginLeft: 5,
+                color:"red"
               }}
             >
-              Sign Out
+              Çıkış
             </Text>
           </View>
         </TouchableOpacity>

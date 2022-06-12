@@ -15,6 +15,4 @@ export const registerUser = async (registerForm) => {
     name: registerForm.name,
     lastName: registerForm.lastName,
   });
-
-  console.log(creds);
 };

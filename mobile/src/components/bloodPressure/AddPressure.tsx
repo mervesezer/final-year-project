@@ -13,7 +13,7 @@ export default function AddPressure() {
 
   const handleCreateBloodPressure = async () => {
     if(value === ""){
-      alert("Kan sekeri degeri bos birakilamaz");
+      alert("Kan Şekeri Değeri Boş Bırakılamaz...");
       return;
     }
 
@@ -36,16 +36,16 @@ export default function AddPressure() {
       <View style={{ flexDirection: "row", marginBottom: 20 }}>
         <TextInput
           style={styles.input}
-          placeholder="kan şekeri değeri"
+          placeholder="Kan Şekeri Değeri"
           value={value}
           onChangeText={(value) => setValue(value)}
         />
-        <DatePick handleConfirm={(date) => setDate(date)}></DatePick>
+        <DatePick handleConfirm={(date) => setDate(date)}/>
       </View>
       <Button
         style={{ backgroundColor: "#f68f40" }}
         onPress={() => handleCreateBloodPressure()}
-        label="kaydet"
+        label="Kaydet"
       />
     </View>
   );

@@ -1,8 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
-  Image,
   Alert,
   Modal as RnModal,
   FlatList,
@@ -10,9 +8,6 @@ import {
 import {
   Card,
   Paragraph,
-  Portal,
-  Provider,
-  TextInput,
   Button as PaperButton,
   Modal,
   Title,
@@ -21,7 +16,7 @@ import Button from "../components/ui/Button";
 import { Calendar, DateData } from "react-native-calendars";
 import React, { useContext, useEffect, useState } from "react";
 import Input from "../components/ui/Input";
-import Icon from "react-native-vector-icons/EvilIcons";
+
 import {
   addDoc,
   collection,
@@ -33,7 +28,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../services/firebaseService";
 import { AuthContext } from "../contexts/AuthContextProvider";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 export default function Note() {
   const { authUser } = useContext(AuthContext);
@@ -70,7 +65,7 @@ export default function Note() {
 
   const handleCreatePlan = async () => {
     if (content === "") {
-      alert("Icerik Gir");
+      alert("İçerik Gir");
       return;
     }
 
@@ -154,7 +149,7 @@ export default function Note() {
               onPress={handleCreatePlan}
             />
             <Button
-              label="Vazgec"
+              label="Vazgeç"
               style={{ marginTop: 10, backgroundColor: "red" }}
               onPress={() => setIsAddPlanVisible(false)}
             />

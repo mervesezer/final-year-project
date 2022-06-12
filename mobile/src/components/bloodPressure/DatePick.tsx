@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import {  View } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Button from "../ui/Button";
 
-const Example = ({handleConfirm}) => {
+const Example = ({ handleConfirm }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -15,15 +14,19 @@ const Example = ({handleConfirm}) => {
   };
 
   return (
-    <View>
-      <Button style={{backgroundColor: "#f68f40"}} label="Tarih ve Saat" onPress={showDatePicker}  />
+    <>
+      <Button
+        style={{ backgroundColor: "#f68f40" }}
+        label="Tarih ve Saat"
+        onPress={showDatePicker}
+      />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="datetime"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
-    </View>
+    </>
   );
 };
 

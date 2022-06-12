@@ -41,8 +41,6 @@ import React, {
             <Text style={{ fontSize: 20, marginVertical: 10 }}></Text>
               <Text>{name}</Text>
               <Text>{lastName}</Text>
-              <Text>{email}</Text>
-              <Text>{password}</Text>
             </View>
         </SafeAreaView>
       </Modal>

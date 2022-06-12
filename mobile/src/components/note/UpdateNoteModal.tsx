@@ -1,11 +1,5 @@
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { doc, setDoc } from "firebase/firestore";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   Text,
   Modal,
@@ -16,41 +10,37 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
-import { AuthContext } from "../../contexts/AuthContextProvider";
-import { auth, db } from "../../services/firebaseService";
+import { db } from "../../services/firebaseService";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 
-interface CreateProfileModalProps extends ModalProps {
+interface UpdateNoteModalProps extends ModalProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data?: any;
+  data: any;
 }
 
-export default function CreateProfileModal({
+export default function UpdateNoteModal({
   setVisible,
   data,
   ...rest
-}: CreateProfileModalProps) {
-  const { authUser, setAuthUser } = useContext(AuthContext);
-  const [name, setName] = useState(authUser.name);
-  const [lastName, setLastName] = useState(authUser.lastName);
+}: UpdateNoteModalProps) {
+  const [note, setNote] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     if (data) {
-      setName(data.name);
-      setLastName(data.lastName);
+      setNote(data.note);
+      setTitle(data.title);
     }
   }, [data]);
 
-  const handleUpdateProfile = async () => {
+  const handleUpdateNote = async () => {
     try {
-      await setDoc(doc(db, "users", authUser.id), {
-        ...authUser,
-        name,
-        lastName,
+      await setDoc(doc(db, "notes", data.id), {
+        ...data,
+        note,
+        title,
       });
-
-      setAuthUser({ ...authUser, name, lastName });
 
       setVisible(false);
     } catch (error) {
@@ -74,27 +64,27 @@ export default function CreateProfileModal({
               }}
               onPress={() => setVisible(false)}
             >
-              <Icon name="x" size={30} color="purple" />
+              <Icon name="x" size={30} color="white" />
             </TouchableOpacity>
             <Text style={{ textAlign: "center", fontSize: 20 }}>
-              Profili Güncelle
+              Yeni Not Ekle
             </Text>
           </View>
           <Input
+            placeholder="Başlık"
             style={{ marginVertical: 10 }}
-            multiline
-            value={name}
-            placeholder="isim"
-            onChangeText={(value) => setName(value)}
-          />
-          <Input
-            placeholder="soyisim"
-            style={{ marginVertical: 10 }}
-            value={lastName}
-            onChangeText={(value) => setLastName(value)}
+            value={title}
+            onChangeText={(value) => setTitle(value)}
           />
 
-          <Button label="Profilimi Güncelle" onPress={handleUpdateProfile} />
+          <Input
+            style={{ marginVertical: 10, flex: 1, textAlignVertical: "top" }}
+            multiline
+            value={note}
+            placeholder="Not..."
+            onChangeText={(value) => setNote(value)}
+          />
+          <Button label="Notumu Güncelle" onPress={handleUpdateNote} />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </Modal>

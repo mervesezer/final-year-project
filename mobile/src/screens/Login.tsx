@@ -4,7 +4,7 @@ import { Card } from "react-native-paper";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { AuthContext } from "../contexts/AuthContextProvider";
-import { auth,db } from "../services/firebaseService";
+import { auth, db } from "../services/firebaseService";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../Navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -18,17 +18,9 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const loginData = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const loginData = await signInWithEmailAndPassword(auth, email, password);
 
-      const docRef = doc(
-        db,
-        "users",
-        loginData.user.uid
-      );
+      const docRef = doc(db, "users", loginData.user.uid);
       const data = (await getDoc(docRef)).data();
 
       setAuthUser({
@@ -38,7 +30,7 @@ export default function Login() {
         lastName: data.lastName,
       });
     } catch (error) {
-      console.log(error);
+      alert("Email Adresi veya Şifre Hatalı.");
     }
   };
 

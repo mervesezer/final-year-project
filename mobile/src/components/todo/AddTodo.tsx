@@ -29,7 +29,7 @@ export default function AddTodo() {
       <TextInput
         value={content}
         style={styles.input}
-        placeholder="liste elemanı.."
+        placeholder="Liste Elemanı.."
         onChangeText={(value) => setContent(value)}
       />
       <Button onPress={handleCreateList} label="Liste Yarat" />

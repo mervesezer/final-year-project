@@ -1,5 +1,4 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import React from "react";
 import Profile from "../../screens/Profile";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -31,7 +30,7 @@ export default function Navigation() {
         name="Profil"
         options={{
           title: "Profil",
-          drawerIcon: ({ size }) => <Icon name="user" size={23} />,
+          drawerIcon: ({ size }) => <Icon name="user" size={23} color="blue"/>,
         }}
         component={Profile}
       />
@@ -41,7 +40,7 @@ export default function Navigation() {
         options={{
           title: "Notlar",
           drawerIcon: ({ size }) => (
-            <FoundationIcon name="clipboard-notes" size={32} />
+            <FoundationIcon name="clipboard-notes" size={32} color="gray" />
           ),
         }}
         component={Note}
@@ -51,7 +50,7 @@ export default function Navigation() {
         name="list_screen"
         options={{
           title: "Listeler",
-          drawerIcon: ({ size }) => <Icon name="list-ol" size={20} />,
+          drawerIcon: ({ size }) => <Icon name="list-ol" size={20} color="orange" />,
         }}
         component={List}
       />
@@ -60,7 +59,7 @@ export default function Navigation() {
         name="planner_screen"
         options={{
           title: "Planlayıcı",
-          drawerIcon: ({ size }) => <Icon name="calendar" size={20} />,
+          drawerIcon: ({ size }) => <Icon name="calendar" size={20} color="green" />,
         }}
         component={Planner}
       />
@@ -69,7 +68,7 @@ export default function Navigation() {
         name="diary_screen"
         options={{
           title: "Günlük",
-          drawerIcon: ({ size }) => <EntypoIcon name="open-book" size={20} />,
+          drawerIcon: ({ size }) => <EntypoIcon name="open-book" size={20}  color="purple"/>,
         }}
         component={Diary}
       />
@@ -79,22 +78,11 @@ export default function Navigation() {
         options={{
           title: "Kan Değerim",
           drawerIcon: ({ size }) => (
-            <FontistoIcon name="blood-test" size={20} />
+            <FontistoIcon name="blood-test" size={20} color="red" />
           ),
         }}
         component={BloodPressure}
       />
-
-      {/* <Drawer.Screen
-        name="ilaclarim"
-        options={{
-          title: "İlaçlarım",
-          drawerIcon: ({ size }) => (
-            <AntDesignIcon name="medicinebox" size={20} />
-          ),
-        }}
-        component={Medicine}
-      /> */}
     </Drawer.Navigator>
   );
 }

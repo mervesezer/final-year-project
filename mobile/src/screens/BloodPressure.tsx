@@ -4,18 +4,23 @@ import {
   doc,
   onSnapshot,
   query,
+  setDoc,
   where,
 } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import AddPressure from "../components/bloodPressure/AddPressure";
 import BloodPressureItem from "../components/bloodPressure/BloodPressureItem";
+import UpdateBloodPressureModal from "../components/bloodPressure/UpdateBloodPressureModal";
 import { AuthContext } from "../contexts/AuthContextProvider";
 import { db } from "../services/firebaseService";
 
 export default function BloodPressure() {
   const { authUser } = useContext(AuthContext);
+  const [updateBloodPressureModalVisible, setUpdateBloodPressureModalVisible] =
+    useState(false);
   const [pressures, setPressures] = useState([]);
+  const [selectedDataToUpdate, setselectedDataToUpdate] = useState();
 
   useEffect(() => {
     const q = query(
@@ -40,22 +45,34 @@ export default function BloodPressure() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <AddPressure />
-        <View style={styles.list}>
-          <FlatList
-            data={pressures}
-            renderItem={({ item }) => (
-              <BloodPressureItem
-                item={item}
-                pressHandler={() => handleDelete(item.id)}
-              />
-            )}
-          />
+    <>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <AddPressure />
+          <View style={styles.list}>
+            <FlatList
+              data={pressures}
+              renderItem={({ item }) => (
+                <BloodPressureItem
+                  item={item}
+                  onPressInput={() => {
+                    setselectedDataToUpdate({ ...item });
+                    setUpdateBloodPressureModalVisible(true);
+                  }}
+                  pressHandler={() => handleDelete(item.id)}
+                />
+              )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+
+      <UpdateBloodPressureModal
+        visible={updateBloodPressureModalVisible}
+        setVisible={setUpdateBloodPressureModalVisible}
+        data={selectedDataToUpdate}
+      />
+    </>
   );
 }
 

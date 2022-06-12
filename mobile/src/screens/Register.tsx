@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
 import { View, Text, Alert, KeyboardAvoidingView } from "react-native";
 import { Card } from "react-native-paper";
@@ -17,9 +16,9 @@ export default function Register({ navigation }) {
   const handleRegister = async () => {
     try {
       await registerUser(registerForm);
-      navigation.navigate('login');
+      navigation.navigate("login");
     } catch (error) {
-      alert(error.message);
+      alert("Böyle Bir Kullanıcı Mevcut.");
     }
   };
 
@@ -41,13 +40,13 @@ export default function Register({ navigation }) {
 
           <Input
             style={{ width: "100%", marginBottom: 10 }}
-            placeholder="Isim"
+            placeholder="Ad"
             value={registerForm.name}
             onChangeText={(name) => setRegisterForm({ ...registerForm, name })}
           />
           <Input
             style={{ width: "100%", marginBottom: 10 }}
-            placeholder="Soyisim"
+            placeholder="Soyad"
             value={registerForm.lastName}
             onChangeText={(lastName) =>
               setRegisterForm({ ...registerForm, lastName })
@@ -71,7 +70,7 @@ export default function Register({ navigation }) {
             }
           />
           <Button
-            label="Kayit Ol"
+            label="Kayıt Ol"
             style={{ width: "100%", marginTop: 10, marginBottom: 10 }}
             onPress={handleRegister}
           />

@@ -40,6 +40,18 @@ export default function Profile() {
         >
           {authUser.name} {authUser.lastName}
         </Text>
+        <Text
+          style={{
+            textAlign: "center",
+            marginTop: 20,
+            fontSize: 20,
+            fontWeight: "bold",
+            color:"purple"
+          }}
+        >
+          {authUser.email}
+        </Text>
+        
         <Button
           style={styles.buttonP2}
           mode="contained"

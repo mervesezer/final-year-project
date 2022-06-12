@@ -16,12 +16,15 @@ import {
   where,
 } from "firebase/firestore";
 import { AuthContext } from "../contexts/AuthContextProvider";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Text } from "react-native";
 import CreateDiaryModal from "../components/diary/CreateDiaryModal";
+import UpdateDiaryModal from "../components/diary/UpdateDiaryModal";
 
 export default function Diary() {
   const { authUser } = useContext(AuthContext);
   const [createDiaryModalVisible, setCreateDiaryModalVisible] = useState(false);
+  const [updateDiaryModalVisible, setUpdateDiaryModalVisible] = useState(false);
+  const [selectedDataToUpdate, setSelectedDataToUpdate] = useState();
   const [diaries, setDiaries] = useState([]);
 
   useEffect(() => {
@@ -44,6 +47,11 @@ export default function Diary() {
 
   const handleDelete = async (id: string) => {
     await deleteDoc(doc(db, "diaries", id));
+  };
+
+  const handleUpdate = async (data) => {
+    setSelectedDataToUpdate(data);
+    setUpdateDiaryModalVisible(true);
   };
 
   return (
@@ -77,9 +85,23 @@ export default function Diary() {
             data={diaries}
             renderItem={(diary) => (
               <Card style={{ marginVertical: 8 }}>
-                <Card.Title
-                  title={diary.item.date.toDate().toLocaleDateString()}
-                />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingRight: 10,
+                  }}
+                >
+                  <Card.Title
+                    title={diary.item.date.toDate().toLocaleDateString()}
+                  />
+                  <Text style={{ marginLeft: "auto", opacity: 0.5 }}>
+                    {" "}
+                    {diary.item.date.toDate().getHours()}:
+                    {diary.item.date.toDate().getMinutes()}
+                  </Text>
+                </View>
+
                 <Card.Content>
                   <Paragraph>{diary.item.description}</Paragraph>
                 </Card.Content>
@@ -87,9 +109,16 @@ export default function Diary() {
                   <PaperButton
                     uppercase={false}
                     compact
+                    style={{ marginLeft: "auto" }}
+                    onPress={() => handleUpdate(diary.item)}
+                  >
+                    Guncelle
+                  </PaperButton>
+                  <PaperButton
+                    uppercase={false}
+                    compact
                     icon={"trash-can"}
                     color="red"
-                    style={{ marginLeft: "auto" }}
                     onPress={() => handleDelete(diary.item.id)}
                   >
                     Sil
@@ -114,6 +143,11 @@ export default function Diary() {
       <CreateDiaryModal
         visible={createDiaryModalVisible}
         setVisible={setCreateDiaryModalVisible}
+      />
+      <UpdateDiaryModal
+        visible={updateDiaryModalVisible}
+        setVisible={setUpdateDiaryModalVisible}
+        data={selectedDataToUpdate}
       />
     </>
   );

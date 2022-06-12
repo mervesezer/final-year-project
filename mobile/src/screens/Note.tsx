@@ -18,10 +18,13 @@ import {
 } from "firebase/firestore";
 import { AuthContext } from "../contexts/AuthContextProvider";
 import { View, FlatList } from "react-native";
+import UpdateNoteModal from "../components/note/UpdateNoteModal";
 
 export default function Note() {
   const { authUser } = useContext(AuthContext);
   const [createNoteModalVisible, setCreateNoteModalVisible] = useState(false);
+  const [updateNoteModalVisible, setUpdateNoteModalVisible] = useState(false);
+  const [selectedDataToUpdate, setSelectedDataToUpdate] = useState();
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -44,6 +47,11 @@ export default function Note() {
 
   const handleDelete = async (id: string) => {
     await deleteDoc(doc(db, "notes", id));
+  };
+
+  const handleUpdate = async (data) => {
+    setSelectedDataToUpdate(data);
+    setUpdateNoteModalVisible(true);
   };
 
   return (
@@ -85,9 +93,17 @@ export default function Note() {
                   <PaperButton
                     uppercase={false}
                     compact
+                    icon={"update"}
+                    style={{ marginLeft: "auto" }}
+                    onPress={() => handleUpdate(note.item)}
+                  >
+                    Güncelle
+                  </PaperButton>
+                  <PaperButton
+                    uppercase={false}
+                    compact
                     icon={"trash-can"}
                     color="red"
-                    style={{ marginLeft: "auto" }}
                     onPress={() => handleDelete(note.item.id)}
                   >
                     Sil
@@ -112,6 +128,12 @@ export default function Note() {
       <CreateNoteModal
         visible={createNoteModalVisible}
         setVisible={setCreateNoteModalVisible}
+      />
+
+      <UpdateNoteModal
+        visible={updateNoteModalVisible}
+        setVisible={setUpdateNoteModalVisible}
+        data={selectedDataToUpdate}
       />
     </>
   );
